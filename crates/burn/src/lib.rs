@@ -117,3 +117,24 @@ pub use burn_remote::server;
 /// Module for collective operations
 #[cfg(feature = "collective")]
 pub mod collective;
+
+#[test]
+fn mre_int_matmul() {
+    use burn_core::tensor::TensorData;
+    use tensor::{Int, Tensor};
+
+    type Backend = backend::Wgpu<f32, i64>;
+    let device: <Backend as burn_core::prelude::Backend>::Device = Default::default();
+
+    const SIZE: usize = 512;
+
+    let mk_tensor = || {
+        let data = [0_i64].repeat(SIZE * SIZE);
+        let data = TensorData::new(data, [SIZE, SIZE]);
+        Tensor::<Backend, 2, Int>::from_data(data, &device)
+    };
+
+    let m = mk_tensor();
+    let n = mk_tensor();
+    let _o = m.matmul(n);
+}
