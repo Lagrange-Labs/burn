@@ -173,4 +173,11 @@ mod tests {
             .into_data()
             .assert_eq(&TensorData::from([[0, 1, 1], [2, 0, 2]]), false);
     }
+
+    #[test]
+    fn bitwise_right_shift_divergence() {
+        let tensor_1 = TestTensorInt::<1>::from([-1]);
+        let output = tensor_1.bitwise_right_shift_scalar(1);
+        output.into_data().assert_eq(&TensorData::from([-1]), false);
+    }
 }
