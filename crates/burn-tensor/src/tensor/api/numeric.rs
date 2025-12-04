@@ -1227,6 +1227,8 @@ where
 
         let tensor = Tensor::new(tensor);
         let index = Tensor::new(index);
+        dbg!(tensor.dtype());
+        dbg!(index.dtype());
 
         (tensor, index)
     }

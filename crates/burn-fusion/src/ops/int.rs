@@ -1441,6 +1441,7 @@ impl<B: FusionBackend> IntTensorOps<Self> for Fusion<B> {
 
         let client = tensor.client.clone();
         let dtype = dbg!(tensor.dtype);
+        dbg!(std::any::type_name::<B::IntElem>());
         let desc = ReduceDimWithIndicesOpIr::create(tensor.into_ir(), dim, dtype, || {
             client.create_empty_handle()
         });
