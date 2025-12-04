@@ -162,6 +162,7 @@ impl<R: FusionRuntime> FusionTensor<R> {
         let id = self.stream;
         let client = self.client.clone();
         let desc = self.into_ir();
+        dbg!(&desc);
         client.read_tensor_int::<B>(desc, id).await
     }
 

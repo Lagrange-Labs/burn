@@ -33,6 +33,7 @@ pub(crate) async fn into_data<R: CubeRuntime>(
             context: format!("{err}"),
         })?;
 
+    dbg!(tensor.dtype);
     Ok(TensorData::from_bytes(bytes, tensor.shape, tensor.dtype))
 }
 
