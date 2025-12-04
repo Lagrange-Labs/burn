@@ -158,7 +158,7 @@ impl<R: CubeRuntime, F: FloatElement, I: IntElement, BT: BoolElement> FusionBack
 {
     type FusionRuntime = FusionCubeRuntime<R, BT>;
 
-    type FullPrecisionBackend = CubeBackend<R, f32, i32, BT>;
+    type FullPrecisionBackend = CubeBackend<R, F, I, BT>;
 
     fn cast_float(tensor: burn_tensor::ops::FloatTensor<Self>, dtype: DType) -> Self::Handle {
         kernel::cast(tensor, dtype).into()
