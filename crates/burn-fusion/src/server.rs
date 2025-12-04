@@ -69,6 +69,7 @@ where
         // The underlying backend can still be async.
         self.drain_stream(id);
         let tensor_int = self.handles.get_int_tensor::<B>(&tensor);
+        dbg!(burn_tensor::TensorMetadata::dtype(&tensor_int));
         self.streams.mark_read(id, &tensor, &self.handles);
         B::int_into_data(tensor_int)
     }
