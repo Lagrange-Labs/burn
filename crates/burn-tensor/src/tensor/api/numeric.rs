@@ -1229,6 +1229,7 @@ where
         let index = Tensor::new(index);
         dbg!(tensor.dtype());
         dbg!(index.dtype());
+        dbg!(index.to_data().dtype);
 
         (tensor, index)
     }
