@@ -1619,15 +1619,16 @@ impl<B: FusionBackend> FloatTensorOps<Self> for Fusion<B> {
 
         let client = tensor.client.clone();
         // TODO: rename `create_with_dtype` specifically for ARG / indices
-        let desc = ReduceDimOpIr::create_arg(tensor.into_ir(), dim, B::IntElem::dtype(), || {
-            client.create_empty_handle()
-        });
+        let desc =
+            ReduceDimOpIr::create_arg(tensor.into_ir(), dim, dbg!(B::IntElem::dtype()), || {
+                client.create_empty_handle()
+            });
 
         client
             .register(
                 streams,
                 OperationIr::NumericFloat(
-                    desc.input.dtype,
+                    dbg!(desc.input.dtype),
                     NumericOperationIr::ArgMax(desc.clone()),
                 ),
                 ArgMaxOps::<B>::new(desc),
@@ -1747,16 +1748,18 @@ impl<B: FusionBackend> FloatTensorOps<Self> for Fusion<B> {
         let streams = OperationStreams::with_inputs([&tensor]);
 
         let client = tensor.client.clone();
-        let desc =
-            ReduceDimWithIndicesOpIr::create(tensor.into_ir(), dim, B::IntElem::dtype(), || {
-                client.create_empty_handle()
-            });
+        let desc = ReduceDimWithIndicesOpIr::create(
+            tensor.into_ir(),
+            dim,
+            dbg!(B::IntElem::dtype()),
+            || client.create_empty_handle(),
+        );
 
         client
             .register(
                 streams,
                 OperationIr::NumericFloat(
-                    desc.tensor.dtype,
+                    dbg!(desc.tensor.dtype),
                     NumericOperationIr::MaxDimWithIndices(desc.clone()),
                 ),
                 MaxDimWithIndicesOps::<B>::new(desc),
