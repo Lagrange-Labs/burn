@@ -1243,7 +1243,10 @@ impl<B: FusionBackend> IntTensorOps<Self> for Fusion<B> {
         client
             .register(
                 streams,
-                OperationIr::NumericInt(desc.out.dtype, NumericOperationIr::ArgMax(desc.clone())),
+                OperationIr::NumericInt(
+                    dbg!(desc.out.dtype),
+                    NumericOperationIr::ArgMax(desc.clone()),
+                ),
                 ArgMaxOps::<B>::new(desc),
             )
             .output()
@@ -1437,7 +1440,7 @@ impl<B: FusionBackend> IntTensorOps<Self> for Fusion<B> {
         let streams = OperationStreams::with_inputs([&tensor]);
 
         let client = tensor.client.clone();
-        let dtype = tensor.dtype;
+        let dtype = dbg!(tensor.dtype);
         let desc = ReduceDimWithIndicesOpIr::create(tensor.into_ir(), dim, dtype, || {
             client.create_empty_handle()
         });
